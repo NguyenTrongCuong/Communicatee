@@ -24,27 +24,27 @@ public class Communicator implements Persistable<String> {
 	@Column(name="communicator_emails")
 	@Pattern(regexp="^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$",
 			 message="Invalid email")
-	@NotBlank(message="Email is required")
+	@NotBlank(message="Invalid email")
 	private String communicatorEmail;
 	
 	@Column(name="communicator_first_names")
 	@Pattern(regexp="^[a-zA-Z]+(([',. -][a-zA-Z ])?[a-zA-Z]*)*$",
 			 message="Invalid first name")
-	@NotBlank(message="First name is required")
+	@NotBlank(message="Invalid first name")
 	private String communicatorFirstName;
 	
 	@Column(name="communicator_last_names")
 	@Pattern(regexp="^[a-zA-Z]+(([',. -][a-zA-Z ])?[a-zA-Z]*)*$",
 			 message="Invalid last name")
-	@NotBlank(message="Last name is required")
+	@NotBlank(message="Invalid last name")
 	private String communicatorLastName;
 	
 	@Column(name="communicator_dobs")
-	@NotNull(message="Date of birth is required")
+	@NotNull(message="Invalid date of birth")
 	private Date communicatorDOB;
 	
 	@Column(name="password")
-	@NotBlank(message="Password is required")
+	@NotBlank(message="Invalid password")
 	private String password;
 
 	@ManyToMany(mappedBy="communicator")

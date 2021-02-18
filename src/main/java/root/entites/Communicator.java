@@ -41,7 +41,6 @@ public class Communicator implements Persistable<String> {
 	
 	@Column(name="communicator_dobs")
 	@NotNull(message="Date of birth is required")
-	@Past
 	private Date communicatorDOB;
 	
 	@Column(name="password")

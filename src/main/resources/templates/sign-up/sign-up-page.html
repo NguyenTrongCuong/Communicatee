@@ -24,7 +24,7 @@
 		<label for="password">Password: </label>
 		<input type="password" id="password" th:field="*{password}"/><br/><br/>
 		<th:block th:if="${#fields.hasErrors('communicatorFirstName')}">
-			<th:block th:each="ele : ${$fields.errors('communicatorFirstName')}">
+			<th:block th:each="ele : ${#fields.errors('communicatorFirstName')}">
 				<p th:text="|${ele}|"></p>
 			</th:block>
 		</th:block>

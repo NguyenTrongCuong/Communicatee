@@ -1,12 +1,14 @@
 package root.entites;
 
 
+import java.io.Serializable;
 import java.sql.Date;
 import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.PostLoad;
@@ -16,12 +18,16 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
+import org.hibernate.annotations.Fetch;
 import org.springframework.data.domain.Persistable;
 
 import root.password_encoder.PasswordEncoder;
 
 @Entity(name="communicators")
-public class Communicator implements Persistable<String> {
+public class Communicator implements Persistable<String>, Serializable {
+	@Transient
+	private static final long serialVersionUID = 1L;
+
 	@Id
 	@Column(name="communicator_emails")
 	@Pattern(regexp="^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$",
@@ -51,7 +57,7 @@ public class Communicator implements Persistable<String> {
 	@Transient
 	private boolean isNew = true;
 
-	@ManyToMany(mappedBy="communicator")
+	@ManyToMany(mappedBy="communicator", fetch=FetchType.EAGER)
 	private Set<Authority> authority = new HashSet<Authority>();
 	
 	@ManyToMany(mappedBy="communicator")

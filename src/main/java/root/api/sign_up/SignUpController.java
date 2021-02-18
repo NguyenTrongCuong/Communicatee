@@ -48,7 +48,7 @@ public class SignUpController {
 			return "sign-up/sign-up-page";
 		}
 		
-		communicator.hashPasswordWithCorrespondingPasswordEncoderType(new BCryptPasswordEncoder(), 7); //hash input password
+		communicator.hashPasswordWithCorrespondingPasswordEncoderType(new BCryptPasswordEncoder(), 10); //hash input password
 		
 		//get default authorities for a new account
 		Optional<Iterable<Authority>> authoritiesOfNewAccount = this.authorityService.findAuthoritiesById(Arrays.asList("ROLE_USER"));

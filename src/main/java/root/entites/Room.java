@@ -1,5 +1,6 @@
 package root.entites;
 
+import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -19,7 +20,10 @@ import javax.persistence.Transient;
 import org.springframework.data.domain.Persistable;
 
 @Entity(name="rooms")
-public class Room implements Persistable<Long> {
+public class Room implements Persistable<Long>, Serializable {
+	@Transient
+	private static final long serialVersionUID = 1L;
+
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	@Column(name="room_ids")

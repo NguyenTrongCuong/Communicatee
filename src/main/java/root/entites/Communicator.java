@@ -22,7 +22,7 @@ import org.springframework.data.domain.Persistable;
 public class Communicator implements Persistable<String> {
 	@Id
 	@Column(name="communicator_emails")
-	@Pattern(regexp="^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$",
+	@Pattern(regexp="^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$",
 			 message="Invalid email")
 	@NotBlank(message="Email is required")
 	private String communicatorEmail;

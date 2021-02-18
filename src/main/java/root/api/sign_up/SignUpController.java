@@ -18,7 +18,7 @@ public class SignUpController {
 	private CommunicatorService communicatorService;
 	
 	@GetMapping("/sign-up-page")
-	public String signUpPage(@ModelAttribute("communicator-model") Communicator communicator) {
+	public String signUpPage(@ModelAttribute("model") Communicator model) {
 		return "sign-up/sign-up-page";
 	}
 	

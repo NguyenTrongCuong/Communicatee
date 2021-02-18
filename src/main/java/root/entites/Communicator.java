@@ -1,6 +1,7 @@
 package root.entites;
 
-import java.util.Date;
+
+import java.sql.Date;
 import java.util.Set;
 
 import javax.persistence.Column;
@@ -39,8 +40,6 @@ public class Communicator implements Persistable<String> {
 	private String communicatorLastName;
 	
 	@Column(name="communicator_dobs")
-	@Pattern(regexp="(?:\\d{1,2}[-/\\s]\\d{1,2}[-/\\s]'?\\d{2,4})|(?:\\d{2,4}[-/\\s]\\d{1,2}[-/\\s]\\d{1,2})|(?:(?:January|February|March|April|May|June|July|August|September|October|November|December|Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sept|Sep|Oct|Nov|Dec)[\\s-/,]*?\\d{1,2}(?:\\s)*(?:rd|th|st)?(?:\\s)*[-/,]?(?:\\s)*'?\\d{2,4})|(?:\\d{1,2}(?:\\s)*(?:rd|th|st)?(?:\\s)*(?:January|February|March|April|May|June|July|August|September|October|November|December|Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sept|Sep|Oct|Nov|Dec)(?:\\s)*?[-/,]?(?:\\s)*'?\\d{2,4})",
-			 message="Invalid date of birth")
 	@NotNull(message="Date of birth is required")
 	@Past
 	private Date communicatorDOB;

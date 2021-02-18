@@ -14,7 +14,7 @@ public class SignInController {
 						 	 Model model) {
 		model.addAttribute("message", message);
 		model.addAttribute("errors", errors);
-		return "/sign-in/sign-in-page";
+		return "sign-in/sign-in-page";
 	}
 
 }

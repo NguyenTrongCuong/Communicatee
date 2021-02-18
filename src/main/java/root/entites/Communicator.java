@@ -24,7 +24,6 @@ public class Communicator implements Persistable<String> {
 	@Column(name="communicator_emails")
 	@Pattern(regexp="^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$",
 			 message="Invalid email")
-	@NotBlank(message="Invalid email")
 	private String communicatorEmail;
 	
 	@Column(name="communicator_first_names")

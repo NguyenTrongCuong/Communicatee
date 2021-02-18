@@ -23,7 +23,7 @@ public class SignUpController {
 	}
 	
 	@PostMapping("/sign-up")
-	public String signUp(@Valid @ModelAttribute("communicator-model") Communicator communicator, BindingResult result) {
+	public String signUp(@Valid @ModelAttribute("model") Communicator communicator, BindingResult result) {
 		if(result.hasErrors()) {
 			return "sign-up/sign-up-page";
 		}

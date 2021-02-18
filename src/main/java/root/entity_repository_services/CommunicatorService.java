@@ -19,7 +19,7 @@ public class CommunicatorService {
 	
 	public boolean isEmailDuplicated(String communicatorEmail) {
 		Optional<String> result = this.communicatorRepository.findCommunicatorEmail(communicatorEmail);
-		return result.isEmpty() ? true : false;
+		return result.isEmpty() ? false : true;
 	}
 
 }

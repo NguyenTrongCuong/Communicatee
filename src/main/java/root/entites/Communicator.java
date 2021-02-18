@@ -10,6 +10,10 @@ import javax.persistence.ManyToMany;
 import javax.persistence.PostLoad;
 import javax.persistence.PrePersist;
 import javax.persistence.Transient;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Past;
+import javax.validation.constraints.Pattern;
 
 import org.springframework.data.domain.Persistable;
 
@@ -17,18 +21,32 @@ import org.springframework.data.domain.Persistable;
 public class Communicator implements Persistable<String> {
 	@Id
 	@Column(name="communicator_emails")
+	@Pattern(regexp="^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$",
+			 message="Invalid email")
+	@NotBlank(message="Email is required")
 	private String communicatorEmail;
 	
 	@Column(name="communicator_first_names")
+	@Pattern(regexp="^[a-zA-Z]+(([',. -][a-zA-Z ])?[a-zA-Z]*)*$",
+			 message="Invalid first name")
+	@NotBlank(message="First name is required")
 	private String communicatorFirstName;
 	
 	@Column(name="communicator_last_names")
+	@Pattern(regexp="^[a-zA-Z]+(([',. -][a-zA-Z ])?[a-zA-Z]*)*$",
+			 message="Invalid last name")
+	@NotBlank(message="Last name is required")
 	private String communicatorLastName;
 	
 	@Column(name="communicator_dobs")
+	@Pattern(regexp="(?:\\d{1,2}[-/\\s]\\d{1,2}[-/\\s]'?\\d{2,4})|(?:\\d{2,4}[-/\\s]\\d{1,2}[-/\\s]\\d{1,2})|(?:(?:January|February|March|April|May|June|July|August|September|October|November|December|Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sept|Sep|Oct|Nov|Dec)[\\s-/,]*?\\d{1,2}(?:\\s)*(?:rd|th|st)?(?:\\s)*[-/,]?(?:\\s)*'?\\d{2,4})|(?:\\d{1,2}(?:\\s)*(?:rd|th|st)?(?:\\s)*(?:January|February|March|April|May|June|July|August|September|October|November|December|Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sept|Sep|Oct|Nov|Dec)(?:\\s)*?[-/,]?(?:\\s)*'?\\d{2,4})",
+			 message="Invalid date of birth")
+	@NotNull(message="Date of birth is required")
+	@Past
 	private Date communicatorDOB;
 	
 	@Column(name="password")
+	@NotBlank(message="Password is required")
 	private String password;
 
 	@ManyToMany(mappedBy="communicator")

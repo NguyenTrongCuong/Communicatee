@@ -18,7 +18,7 @@ public class CommunicatorAuthenticationFailureHandler implements AuthenticationF
 	public void onAuthenticationFailure(HttpServletRequest request,
 										HttpServletResponse response,
 										AuthenticationException exception) throws IOException, ServletException {
-		this.redirectStrategy.sendRedirect(request, response, "/sign-in-page?errors=email-or-password-is-incorrect");
+		this.redirectStrategy.sendRedirect(request, response, "/sign-in-page?errors=Email%20or%20password%20is%20incorrect");
 	}
 
 }

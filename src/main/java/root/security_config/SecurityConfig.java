@@ -14,12 +14,14 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
 import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 
+import root.access_denied_handler_config.CustomAccessDeniedHandler;
 import root.api.sign_in.CommunicatorAuthenticationFailureHandler;
 import root.api.sign_in.CommunicatorAuthenticationSuccessHandler;
 
@@ -61,6 +63,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		repository.setDataSource(dataSource);
 		return repository;
 	}
+	
+	@Bean
+	public AccessDeniedHandler getCustomAccessDeniedHandler() {
+		return new CustomAccessDeniedHandler();
+	}
 
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
@@ -69,10 +76,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		http.csrf().csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
-			.and()
+		http.csrf()
+				.csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
+				.and()
 			.authorizeRequests()
-				.antMatchers("/", "/sign-in-page", "sign-up-page", "sign-in").permitAll()
+				.antMatchers("/", "/sign-in-page", "/sign-up-page", "/sign-in", "/sign-up", "/process-invalid-session").permitAll()
 				.antMatchers("/**").hasRole("USER")
 				.and()
 			.formLogin()
@@ -81,7 +89,18 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.successHandler(getCommunicatorAuthenticationSuccessHandler())
 				.failureHandler(getCommunicatorAuthenticationFailureHandler())
 				.and()
-			.rememberMe().tokenRepository(getPersistentTokenRepository()).userDetailsService(communicatorDetailsService);
+			.rememberMe()
+				.tokenRepository(getPersistentTokenRepository())
+				.userDetailsService(communicatorDetailsService)
+				.and()
+			.sessionManagement()
+				.maximumSessions(1)
+				.expiredUrl("/process-invalid-session")
+				.and()
+				.invalidSessionUrl("/process-invalid-session")
+				.and()
+			.exceptionHandling()
+				.accessDeniedHandler(getCustomAccessDeniedHandler());
 	}
 	
 	@Override

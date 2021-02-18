@@ -9,8 +9,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class SignInController {
 	
 	@GetMapping("/sign-in-page")
-	public String signInPage(@RequestParam(name="errors", defaultValue="empty", required=false) String errors,
-						 Model model) {
+	public String signInPage(@RequestParam(name="message", required=false) String message,
+							 @RequestParam(name="errors", required=false) String errors,
+						 	 Model model) {
+		model.addAttribute("message", message);
 		model.addAttribute("errors", errors);
 		return "/sign-in/sign-in-page";
 	}

@@ -9,8 +9,111 @@
 </head>
 <body>
 	<form th:action="@{/sign-up}" method="POST" th:object="${communicator-model}">
+		<th:block th:if="${#fields.hasErrors('communicatorEmail')}">
+			<th:block th:each="ele : ${#fields.errors('communicatorEmail')}">
+				<p th:text="|${ele}|"></p>
+			</th:block>
+		</th:block>
 		<label for="email">Email: </label>
-		<input type="text" />
+		<input type="text" id="email" th:field="*{communicatorEmail}"/><br/><br/>
+		<th:block th:if="${#fields.hasErrors('password')}">
+			<th:block th:each="ele : ${#fields.errors('password')}">
+				<p th:text="|${ele}|"></p>
+			</th:block>
+		</th:block>
+		<label for="password">Password: </label>
+		<input type="password" id="password" th:field="*{password}"/><br/><br/>
+		<th:block th:if="${#fields.hasErrors('communicatorFirstName')}">
+			<th:block th:each="ele : ${$fields.errors('communicatorFirstName')}">
+				<p th:text="|${ele}|"></p>
+			</th:block>
+		</th:block>
+		<label for="first-name">First name: </label>
+		<input type="text" id="first-name" th:field="*{communicatorFirstName}"/><br/><br/>
+		<th:block th:if="${#fields.hasErrors('communicatorLastName')}">
+			<th:block th:each="ele : ${#fields.errors('communicatorLastName')}">
+				<p th:text="|${ele}|"></p>			
+			</th:block>
+		</th:block>
+		<label for="last-name">Last name: </label>
+		<input type="text" id="last-name" th:field="*{communicatorLastName}"/><br/><br/>
+		<th:block th:if="${#fields.hasErrors('communicatorDOB')}">
+			<th:block th:each="ele : ${#fields.errors('communicatorDOB')}">
+				<p th:text="|${ele}|"></p>
+			</th:block>
+		</th:block>
+		<label for="dob">Date of birth: </label>
+		<input type="date" id="dob" th:field="*{communicatorDOB}"/><br/><br/>
+		<input type="submit" value="Sign up"/>
 	</form>
 </body>
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

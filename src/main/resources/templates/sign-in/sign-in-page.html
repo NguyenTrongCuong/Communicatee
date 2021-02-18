@@ -8,6 +8,12 @@
 	<title>Project</title>
 </head>
 <body>
+	<th:block th:if="${message != null}">
+		<p th:text="|${message}|"></p>
+	</th:block>
+	<th:block th:if="${errors != null}">
+		<p th:text="|${errors}|"></p>
+	</th:block>
 	<form th:action="@{/sign-in}" method="POST">
 		<label for="username">Username: </label>
 		<input type="text" id="username" name="username"/><br/><br/>

@@ -9,5 +9,14 @@
 </head>
 <body>
 	<h1>Welcome</h1>
+	<th:block th:switch="${session.communicator}">
+		<th:block th:case="null">
+			<p><a th:href="@{/sign-in-page}">Sign in</a></p>
+			<p><a th:href="@{/sign-up-page}">Sign up</a></p>
+		</th:block>
+		<th:block th:case="*">
+			<p th:text="|${session.communicator.communicatorFirstName}|"></p>
+		</th:block>
+	</th:block>
 </body>
 </html>

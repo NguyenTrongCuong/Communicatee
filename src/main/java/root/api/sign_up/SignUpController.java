@@ -23,11 +23,11 @@ public class SignUpController {
 	}
 	
 	@PostMapping("/sign-up")
-	public String signUp(@Valid @ModelAttribute("model") Communicator communicator, BindingResult result) {
+	public String signUp(@Valid @ModelAttribute("model") Communicator model, BindingResult result) {
 		if(result.hasErrors()) {
 			return "sign-up/sign-up-page";
 		}
-		this.communicatorService.saveCommunicator(communicator);
+		this.communicatorService.saveCommunicator(model);
 		return "sign-in/sign-in-page?message=Sign%20up%successfully,%20please%20sign%20in%20to%20continue";
 	}
 	

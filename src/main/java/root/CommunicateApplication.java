@@ -7,7 +7,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 @SpringBootApplication
 @EnableCaching
-@EnableJpaRepositories(basePackages={"root.entity_repositories"})
+@EnableJpaRepositories(basePackages={"root"})
 public class CommunicateApplication {
 
 	public static void main(String[] args) {

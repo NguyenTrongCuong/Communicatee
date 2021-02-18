@@ -10,25 +10,11 @@ import org.redisson.hibernate.RedissonRegionFactory;
 public class CustomRegionFactory extends RedissonRegionFactory {
 	private static final long serialVersionUID = 1L;
 
-	@Override
-	protected RedissonClient createRedissonClient(Map properties) {
-		String address = System.getenv().get("REDIS_URL");
-        String[] passwordComponent1 = address.split(":");
-        String[] passwordComponent2 = passwordComponent1[2].split("@");
-        String password = passwordComponent2[0];
-        Config config = new Config();
-        config.useSingleServer()
-       		  .setConnectionMinimumIdleSize(5)
-       		  .setAddress(address)
-       		  .setPassword(password);
-        return Redisson.create(config);
-	}
-	
 //	@Override
 //	protected RedissonClient createRedissonClient(Map properties) {
-//		String address = "redis://:pe8c8d91c1bd757d4debe5906c5a9f6283768954a859ce302d4b9413802dfed25@ec2-50-17-14-172.compute-1.amazonaws.com:31469";
+//		String address = System.getenv().get("REDIS_URL");
 //        String[] passwordComponent1 = address.split(":");
-//        String[] passwordComponent2 =passwordComponent1[2].split("@");
+//        String[] passwordComponent2 = passwordComponent1[2].split("@");
 //        String password = passwordComponent2[0];
 //        Config config = new Config();
 //        config.useSingleServer()
@@ -37,6 +23,20 @@ public class CustomRegionFactory extends RedissonRegionFactory {
 //       		  .setPassword(password);
 //        return Redisson.create(config);
 //	}
+	
+	@Override
+	protected RedissonClient createRedissonClient(Map properties) {
+		String address = "redis://:p930a4db3e26eee29e3b382a81f7daaa87adf58b71be3779a487f4f0abf2b41eb@ec2-34-198-87-71.compute-1.amazonaws.com:21979";
+        String[] passwordComponent1 = address.split(":");
+        String[] passwordComponent2 =passwordComponent1[2].split("@");
+        String password = passwordComponent2[0];
+        Config config = new Config();
+        config.useSingleServer()
+       		  .setConnectionMinimumIdleSize(5)
+       		  .setAddress(address)
+       		  .setPassword(password);
+        return Redisson.create(config);
+	}
 	
 	
 

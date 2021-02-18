@@ -13,7 +13,6 @@ import javax.persistence.PrePersist;
 import javax.persistence.Transient;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Past;
 import javax.validation.constraints.Pattern;
 
 import org.springframework.data.domain.Persistable;
@@ -51,6 +50,10 @@ public class Communicator implements Persistable<String> {
 	
 	@ManyToMany(mappedBy="communicator")
 	private Set<Room> room;
+
+	public void setCommunicatorEmail(String communicatorEmail) {
+		this.communicatorEmail = communicatorEmail;
+	}
 
 	public void setPassword(String password) {
 		this.password = password;

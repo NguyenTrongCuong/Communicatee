@@ -19,11 +19,6 @@ public class CommunicatorAuthenticationSuccessHandler implements AuthenticationS
 	public void onAuthenticationSuccess(HttpServletRequest request,
 										HttpServletResponse response,
 										Authentication authentication) throws IOException, ServletException {
-		HttpSession session = null;
-		synchronized(session = request.getSession()) {
-			CommunicatorDetails communicatorDetails = (CommunicatorDetails) authentication.getPrincipal();
-			session.setAttribute("communicator", communicatorDetails.getCommunicator());
-		}
 		this.redirectStrategy.sendRedirect(request, response, "/");
 	}
 

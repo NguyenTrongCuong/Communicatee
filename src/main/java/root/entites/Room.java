@@ -1,5 +1,6 @@
 package root.entites;
 
+import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.Column;
@@ -34,10 +35,10 @@ public class Room implements Persistable<Long> {
 	@JoinTable(name="communicators_rooms",
 			   joinColumns=@JoinColumn(name="room_ids"),
 			   inverseJoinColumns=@JoinColumn(name="communicator_emails"))
-	private Set<Communicator> communicator;
+	private Set<Communicator> communicator = new HashSet<Communicator>();
 	
 	@OneToMany(mappedBy="room")
-	private Set<Message> message;
+	private Set<Message> message = new HashSet<Message>();
 	
 	public Set<Communicator> getCommunicator() {
 		return communicator;

@@ -2,6 +2,7 @@ package root.entites;
 
 
 import java.sql.Date;
+import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.Column;
@@ -16,6 +17,8 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
 import org.springframework.data.domain.Persistable;
+
+import root.password_encoder.PasswordEncoder;
 
 @Entity(name="communicators")
 public class Communicator implements Persistable<String> {
@@ -44,12 +47,15 @@ public class Communicator implements Persistable<String> {
 	@Column(name="password")
 	@NotBlank(message="Invalid password")
 	private String password;
+	
+	@Transient
+	private boolean isNew = true;
 
 	@ManyToMany(mappedBy="communicator")
-	private Set<Authority> authority;
+	private Set<Authority> authority = new HashSet<Authority>();
 	
 	@ManyToMany(mappedBy="communicator")
-	private Set<Room> room;
+	private Set<Room> room = new HashSet<Room>();
 
 	public void setCommunicatorEmail(String communicatorEmail) {
 		this.communicatorEmail = communicatorEmail;
@@ -79,9 +85,6 @@ public class Communicator implements Persistable<String> {
 		this.room = room;
 	}
 
-	@Transient
-	private boolean isNew = true;
-
 	public String getCommunicatorFirstName() {
 		return communicatorFirstName;
 	}
@@ -108,6 +111,11 @@ public class Communicator implements Persistable<String> {
 
 	public void setCommunicatorDOB(Date communicatorDOB) {
 		this.communicatorDOB = communicatorDOB;
+	}
+	
+	public void hashPasswordWithCorrespondingPasswordEncoderType(PasswordEncoder passwordEncoderType, int levelOfSalt) {
+		String hashedPassword = passwordEncoderType.hashPassword(getPassword(), levelOfSalt);
+		setPassword(hashedPassword);
 	}
 
 	@Override

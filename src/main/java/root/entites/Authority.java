@@ -1,5 +1,6 @@
 package root.entites;
 
+import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.Column;
@@ -19,7 +20,7 @@ public class Authority {
 	@JoinTable(name="communicators_authorities",
 			   joinColumns=@JoinColumn(name="roles"),
 			   inverseJoinColumns=@JoinColumn(name="communicator_emails"))
-	private Set<Communicator> communicator;
+	private Set<Communicator> communicator = new HashSet<Communicator>();
 	
 	public Set<Communicator> getCommunicator() {
 		return communicator;

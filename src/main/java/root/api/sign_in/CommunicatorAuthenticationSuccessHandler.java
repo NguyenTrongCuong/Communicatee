@@ -19,7 +19,7 @@ public class CommunicatorAuthenticationSuccessHandler implements AuthenticationS
 	public void onAuthenticationSuccess(HttpServletRequest request,
 										HttpServletResponse response,
 										Authentication authentication) throws IOException, ServletException {
-		this.redirectStrategy.sendRedirect(request, response, "/");
+		this.redirectStrategy.sendRedirect(request, response, "/sign-in-succeeded-page");
 	}
 
 }

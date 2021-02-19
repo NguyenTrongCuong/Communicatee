@@ -5,9 +5,53 @@
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>Project</title>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.2/css/all.css" integrity="sha384-vSIIfh2YWi9wW0r9iZe7RJPrKwp6bG+s9QZMoITbCckVJqGCCRhc+ccxNcdpHuYu" crossorigin="anonymous">
+    <link rel="stylesheet" th:href="@{/css/sign-in-succeeded/sign-in-succeeded-page.css}"/>
+    <title>Communicatee</title>
 </head>
 <body>
-	<h1 th:text="|Hello ${session.communicator.communicatorFirstName}|"></h1>
+	<div class="header">
+        <h1>Header</h1>
+        <p>Resize the browser window to see the responsive effect.</p>
+    </div>
+
+    <div class="topnav">
+        <a href="#" th:text="|Hello ${session.communicator.communicatorFirstName}|">Link</a>
+        <a href="#">Link</a>
+        <a href="#">Link</a>
+    </div>
+
+    <div class="row">
+        <div class="column" id="icons">
+            <h2>Icons</h2>
+            <div class="icons-container">
+                <i class="far fa-comment-dots" id="conversations-icon">
+                    <span id="badge1">3</span>
+                </i>
+            </div>
+            <div class="icons-container">
+                <i class="far fa-bell" id="notifications-icon">
+                    <span id="badge2">3</span>
+                </i>
+            </div>
+            <div class="icons-container">
+                <i class="far fa-comments" id="friend-requests-icon"></i>
+            </div>
+            <div class="icons-container">
+                <i class="fas fa-users" id="message-creating-icon"></i>
+            </div>
+        </div>
+        
+        <div class="column" id="conversations">
+            <h2>Conversations</h2>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas sit amet pretium urna. Vivamus venenatis velit nec neque ultricies, eget elementum magna tristique. Quisque vehicula, risus eget aliquam placerat, purus leo tincidunt eros, eget luctus quam orci in velit. Praesent scelerisque tortor sed accumsan convallis.</p>
+        </div>
+        
+        <div class="column" id="conversation-contents">
+            <h2>Conversation contents</h2>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas sit amet pretium urna. Vivamus venenatis velit nec neque ultricies, eget elementum magna tristique. Quisque vehicula, risus eget aliquam placerat, purus leo tincidunt eros, eget luctus quam orci in velit. Praesent scelerisque tortor sed accumsan convallis.</p>
+        </div>
+    </div>
 </body>
 </html>

@@ -90,6 +90,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.failureHandler(getCommunicatorAuthenticationFailureHandler())
 				.and()
 			.rememberMe()
+				.authenticationSuccessHandler(getCommunicatorAuthenticationSuccessHandler())
 				.tokenRepository(getPersistentTokenRepository())
 				.userDetailsService(communicatorDetailsService)
 				.and()

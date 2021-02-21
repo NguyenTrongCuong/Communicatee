@@ -1,4 +1,4 @@
-package root.message_broker_config;
+package root.web_stomp_broker_config;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
@@ -12,7 +12,7 @@ import org.springframework.web.socket.server.support.HttpSessionHandshakeInterce
 
 @Configuration
 @EnableWebSocketMessageBroker
-public class MessageBrokerConfig extends AbstractSessionWebSocketMessageBrokerConfigurer<Session> {
+public class WebStompBrokerConfig extends AbstractSessionWebSocketMessageBrokerConfigurer<Session> {
 	@Autowired
 	private Environment env;
 

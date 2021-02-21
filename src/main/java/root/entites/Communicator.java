@@ -2,7 +2,8 @@ package root.entites;
 
 
 import java.io.Serializable;
-import java.sql.Date;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -10,12 +11,13 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.PostLoad;
 import javax.persistence.PrePersist;
 import javax.persistence.Transient;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
 import org.springframework.data.domain.Persistable;
@@ -46,8 +48,11 @@ public class Communicator implements Persistable<String>, Serializable {
 	private String communicatorLastName;
 	
 	@Column(name="communicator_dobs")
-	@NotNull(message="Invalid date of birth")
-	private Date communicatorDOB;
+	private LocalDate communicatorDateOfBirth;
+	
+	@Transient
+	@NotBlank(message="Invalid date of birth")
+	private String communicatorDOB;
 	
 	@Column(name="password")
 	@NotBlank(message="Invalid password")
@@ -61,6 +66,58 @@ public class Communicator implements Persistable<String>, Serializable {
 	
 	@ManyToMany(mappedBy="communicator")
 	private Set<Room> room = new HashSet<Room>();
+	
+	@ManyToMany(mappedBy="communicator", fetch=FetchType.EAGER)
+	private Set<Notification> notification = new HashSet<Notification>();
+	
+	@ManyToMany(fetch=FetchType.EAGER)
+	@JoinTable(name="friends_communicators",
+	   		   joinColumns=@JoinColumn(name="communicator_ids"),
+	   		   inverseJoinColumns=@JoinColumn(name="communicator_friends_ids"))
+	private Set<Communicator> friend = new HashSet<Communicator>();
+	
+	@ManyToMany(mappedBy="friend")
+	private Set<Communicator> friendOf = new HashSet<Communicator>();
+
+	public Set<Communicator> getFriend() {
+		return friend;
+	}
+
+	public void setFriend(Set<Communicator> friend) {
+		this.friend = friend;
+	}
+
+	public LocalDate getCommunicatorDateOfBirth() {
+		return communicatorDateOfBirth;
+	}
+
+	public void setCommunicatorDateOfBirth(LocalDate communicatorDateOfBirth) {
+		this.communicatorDateOfBirth = communicatorDateOfBirth;
+	}
+
+	public String getCommunicatorDOB() {
+		return communicatorDOB;
+	}
+
+	public void setCommunicatorDOB(String communicatorDOB) {
+		this.communicatorDOB = communicatorDOB;
+	}
+
+	public Set<Communicator> getFriendOf() {
+		return friendOf;
+	}
+
+	public void setFriendOf(Set<Communicator> friendOf) {
+		this.friendOf = friendOf;
+	}
+
+	public Set<Notification> getNotification() {
+		return notification;
+	}
+
+	public void setNotification(Set<Notification> notification) {
+		this.notification = notification;
+	}
 
 	public void setCommunicatorEmail(String communicatorEmail) {
 		this.communicatorEmail = communicatorEmail;
@@ -109,18 +166,14 @@ public class Communicator implements Persistable<String>, Serializable {
 	public String getCommunicatorEmail() {
 		return communicatorEmail;
 	}
-
-	public Date getCommunicatorDOB() {
-		return communicatorDOB;
-	}
-
-	public void setCommunicatorDOB(Date communicatorDOB) {
-		this.communicatorDOB = communicatorDOB;
-	}
 	
 	public void hashPasswordWithCorrespondingPasswordEncoderType(PasswordEncoder passwordEncoderType, int levelOfSalt) {
 		String hashedPassword = passwordEncoderType.hashPassword(getPassword(), levelOfSalt);
 		setPassword(hashedPassword);
+	}
+	
+	public void convertDOB(DateTimeFormatter pattern) {
+		this.setCommunicatorDateOfBirth(LocalDate.parse(this.getCommunicatorDOB(), pattern));
 	}
 
 	@Override

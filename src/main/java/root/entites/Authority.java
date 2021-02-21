@@ -6,6 +6,7 @@ import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
@@ -28,7 +29,7 @@ public class Authority implements Persistable<String>, Serializable {
 	@Transient
 	private boolean isNew = true;
 
-	@ManyToMany
+	@ManyToMany(fetch=FetchType.EAGER)
 	@JoinTable(name="communicators_authorities",
 			   joinColumns=@JoinColumn(name="roles"),
 			   inverseJoinColumns=@JoinColumn(name="communicator_emails"))

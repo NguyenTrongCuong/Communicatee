@@ -59,11 +59,11 @@ body {
       width: 10%;
   }
 
-  #conversations {
+  #header1 {
       width: 25%;
   }
 
-  #conversation-contents {
+  #header2 {
       width: 65%;
   }
 
@@ -108,3 +108,37 @@ body {
     font-size: 15px;
     visibility: hidden;
   }
+  
+  #friend-request-form {
+    padding: 10px;
+  }
+
+  #friend-request-form-cover {
+    border: 1px solid black;
+    padding: 10px;
+  }
+
+  #friend-request-sending-button {
+    margin-left: 270px;
+  }
+
+  #friend-requests-icon:hover {
+    cursor: grab;
+  }
+  
+  .notification-element {
+  	padding: 5px;
+    border: 1px solid black;
+    margin-top: 10px;
+  }
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  

@@ -1,6 +1,7 @@
 package root.entity_repositories;
 
 import java.util.Optional;
+import java.util.Set;
 
 import javax.transaction.Transactional;
 
@@ -17,5 +18,51 @@ public interface CommunicatorRepository extends CrudRepository<Communicator, Str
 	
 	@Query("SELECT c.communicatorEmail FROM communicators c WHERE c.communicatorEmail = :communicatorEmail")
 	public Optional<String> findCommunicatorEmail(@Param("communicatorEmail") String communicatorEmail);
+	
+	@Query("SELECT c.friend FROM communicators c JOIN c.friend f WHERE c.communicatorEmail = :communicatorEmail")
+	public Optional<Set<Communicator>> findFriendsOfCommunicator(@Param("communicatorEmail") String communicatorEmail);
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

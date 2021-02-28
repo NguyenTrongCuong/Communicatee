@@ -1,4 +1,4 @@
-package root.amqp_broker_config;
+package root.config.amqp_broker_config;
 
 import org.springframework.amqp.core.AmqpAdmin;
 import org.springframework.amqp.rabbit.connection.CachingConnectionFactory;

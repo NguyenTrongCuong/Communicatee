@@ -7,6 +7,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.Cacheable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -14,17 +15,22 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.PostLoad;
 import javax.persistence.PrePersist;
 import javax.persistence.Transient;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.springframework.data.domain.Persistable;
 
 import root.password_encoder.PasswordEncoder;
 
 @Entity(name="communicators")
+@Cacheable
+@Cache(usage=CacheConcurrencyStrategy.READ_WRITE)
 public class Communicator implements Persistable<String>, Serializable {
 	@Transient
 	private static final long serialVersionUID = 1L;
@@ -64,7 +70,7 @@ public class Communicator implements Persistable<String>, Serializable {
 	@ManyToMany(mappedBy="communicator", fetch=FetchType.EAGER)
 	private Set<Authority> authority = new HashSet<Authority>();
 	
-	@ManyToMany(mappedBy="communicator")
+	@ManyToMany(mappedBy="communicator", fetch=FetchType.EAGER)
 	private Set<Room> room = new HashSet<Room>();
 	
 	@ManyToMany(mappedBy="communicator", fetch=FetchType.EAGER)
@@ -76,8 +82,30 @@ public class Communicator implements Persistable<String>, Serializable {
 	   		   inverseJoinColumns=@JoinColumn(name="communicator_friends_ids"))
 	private Set<Communicator> friend = new HashSet<Communicator>();
 	
-	@ManyToMany(mappedBy="friend")
+	@ManyToMany(mappedBy="friend", fetch=FetchType.EAGER)
 	private Set<Communicator> friendOf = new HashSet<Communicator>();
+	
+	@OneToOne(mappedBy="roomRoot")
+	private Room rootOf;
+	
+	@ManyToMany(mappedBy="roomAdmin", fetch=FetchType.EAGER)
+	private Set<Room> adminOf = new HashSet<Room>();
+
+	public Room getRootOf() {
+		return rootOf;
+	}
+
+	public void setRootOf(Room rootOf) {
+		this.rootOf = rootOf;
+	}
+
+	public Set<Room> getAdminOf() {
+		return adminOf;
+	}
+
+	public void setAdminOf(Set<Room> adminOf) {
+		this.adminOf = adminOf;
+	}
 
 	public Set<Communicator> getFriend() {
 		return friend;
@@ -190,6 +218,31 @@ public class Communicator implements Persistable<String>, Serializable {
 	@PostLoad
 	public void markNotNew() {
 		this.isNew = false;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((communicatorEmail == null) ? 0 : communicatorEmail.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Communicator other = (Communicator) obj;
+		if (communicatorEmail == null) {
+			if (other.communicatorEmail != null)
+				return false;
+		} else if (!communicatorEmail.equals(other.communicatorEmail))
+			return false;
+		return true;
 	}
 
 }

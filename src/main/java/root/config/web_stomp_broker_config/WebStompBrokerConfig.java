@@ -1,4 +1,4 @@
-package root.web_stomp_broker_config;
+package root.config.web_stomp_broker_config;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;

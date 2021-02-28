@@ -6,6 +6,7 @@ import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -13,6 +14,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+import javax.persistence.OrderBy;
 import javax.persistence.PostLoad;
 import javax.persistence.PrePersist;
 import javax.persistence.Transient;
@@ -23,6 +26,9 @@ import org.springframework.data.domain.Persistable;
 public class Room implements Persistable<Long>, Serializable {
 	@Transient
 	private static final long serialVersionUID = 1L;
+	
+	@Transient
+	private boolean isNew = true;
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
@@ -35,15 +41,57 @@ public class Room implements Persistable<Long>, Serializable {
 	@Column(name="number_of_members")
 	private int numberOfMemebers;
 	
-	@ManyToMany
+	@Column(name="room_types")
+	private String roomType;
+	
+	@OneToOne
+	@JoinColumn(name="root_ids")
+	private Communicator roomRoot;
+	
+	@ManyToMany(fetch=FetchType.EAGER)
+	@JoinTable(name="rooms_admins",
+			   joinColumns=@JoinColumn(name="room_ids"),
+			   inverseJoinColumns=@JoinColumn(name="communicator_emails"))
+	private Set<Communicator> roomAdmin = new HashSet<Communicator>();
+	
+	@ManyToMany(fetch=FetchType.EAGER)
 	@JoinTable(name="communicators_rooms",
 			   joinColumns=@JoinColumn(name="room_ids"),
 			   inverseJoinColumns=@JoinColumn(name="communicator_emails"))
 	private Set<Communicator> communicator = new HashSet<Communicator>();
 	
-	@OneToMany(mappedBy="room")
+	@OneToMany(mappedBy="room", fetch=FetchType.EAGER)
+	@OrderBy("sentAt DESC")
 	private Set<Message> message = new HashSet<Message>();
-	
+
+	public Communicator getRoomRoot() {
+		return roomRoot;
+	}
+
+	public void setRoomRoot(Communicator roomRoot) {
+		this.roomRoot = roomRoot;
+	}
+
+	public Set<Communicator> getRoomAdmin() {
+		return roomAdmin;
+	}
+
+	public void setRoomAdmin(Set<Communicator> roomAdmin) {
+		this.roomAdmin = roomAdmin;
+	}
+
+	public String getRoomType() {
+		return roomType;
+	}
+
+	public void setRoomType(String roomType) {
+		this.roomType = roomType;
+	}
+
+	public void setRoomId(Long roomId) {
+		this.roomId = roomId;
+	}
+
 	public Set<Communicator> getCommunicator() {
 		return communicator;
 	}
@@ -59,9 +107,6 @@ public class Room implements Persistable<Long>, Serializable {
 	public void setMessage(Set<Message> message) {
 		this.message = message;
 	}
-
-	@Transient
-	private boolean isNew = true;
 
 	public Long getRoomId() {
 		return roomId;
@@ -81,10 +126,6 @@ public class Room implements Persistable<Long>, Serializable {
 
 	public void setNumberOfMemebers(int numberOfMemebers) {
 		this.numberOfMemebers = numberOfMemebers;
-	}
-
-	public void setNew(boolean isNew) {
-		this.isNew = isNew;
 	}
 
 	@Override

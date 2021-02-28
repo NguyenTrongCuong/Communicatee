@@ -1,4 +1,4 @@
-package root.access_denied_handler_config;
+package root.config.access_denied_handler_config;
 
 import java.io.IOException;
 

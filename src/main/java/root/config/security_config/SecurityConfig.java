@@ -1,4 +1,4 @@
-package root.security_config;
+package root.config.security_config;
 
 import javax.sql.DataSource;
 
@@ -21,9 +21,9 @@ import org.springframework.security.web.authentication.rememberme.JdbcTokenRepos
 import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 
-import root.access_denied_handler_config.CustomAccessDeniedHandler;
 import root.api.sign_in.CommunicatorAuthenticationFailureHandler;
 import root.api.sign_in.CommunicatorAuthenticationSuccessHandler;
+import root.config.access_denied_handler_config.CustomAccessDeniedHandler;
 
 @Configuration
 @EnableWebSecurity

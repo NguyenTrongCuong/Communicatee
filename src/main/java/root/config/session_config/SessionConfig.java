@@ -1,4 +1,4 @@
-package root.session_config;
+package root.config.session_config;
 
 import org.redisson.Redisson;
 import org.redisson.api.RedissonClient;
@@ -29,7 +29,7 @@ public class SessionConfig extends AbstractHttpSessionApplicationInitializer {
         String password = passwordComponent2[0];
         Config config = new Config();
         config.useSingleServer()
-       		  .setConnectionMinimumIdleSize(10)
+       		  .setConnectionMinimumIdleSize(4)
        		  .setAddress(address)
        		  .setPassword(password);
         return Redisson.create(config);

@@ -61,6 +61,8 @@ body {
 
   #header1 {
       width: 25%;
+      height: 550px;
+      overflow-y: auto;
   }
 
   #header2 {
@@ -132,11 +134,88 @@ body {
     margin-top: 10px;
   }
   
+  #message-creating-icon:hover {
+  	cursor: grab;
+  }
   
+  #room-creating-button {
+  	margin-left: 270px;
+  }
   
+  .conversation-layout {
+  	padding: 5px;
+    border: 1px solid black;
+    margin-top: 10px;
+  }
   
-  
-  
+  #message-cover {
+    border: 1px solid black;
+    padding: 10px;
+    height: 370px;
+  }
+
+  #message-reply-cover {
+    border: 1px solid black;
+    padding: 10px;
+    height: 75px;
+    margin-top: 10px;
+    border-radius: 10px;
+    position: relative;
+  }
+
+  #message-reply {
+    border: 1px solid black;
+    border-radius: 10px;
+    padding: 10px;
+    width: 95%;
+    height: 50px;
+    word-wrap: break-word;
+    overflow: auto;
+  }
+
+  #sending-message-button {
+    font-size: 30px;
+    position: absolute;
+    top: 23px;
+    right: 16px;
+  }
+
+  #sending-message-button:hover {
+    cursor: grab;
+  }
+
+  .float-child {
+    float: left;
+    width: 25%;
+  }
+
+  .message-content-cover {
+    border: 1px solid black;
+    width: 100%;
+    padding: 10px;
+    overflow: auto;
+  }
+
+  .message-content-from-others {
+    border: 1px solid black;
+    border-radius: 20px;
+    width: 350px;
+    resize: both;
+    word-wrap: break-word;
+    padding: 5px;
+    margin-top: 10px;
+  }
+
+  .message-content-from-me {
+    border: 1px solid black;
+    border-radius: 20px;
+    width: 350px;
+    resize: both;
+    word-wrap: break-word;
+    padding: 5px;
+    margin-top: 10px;
+    margin-left: 565px;
+  }
   
   
   

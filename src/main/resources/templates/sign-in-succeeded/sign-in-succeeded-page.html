@@ -19,6 +19,12 @@
 	<input type="hidden" id="communicator-first-name" th:value="|${session.communicator.communicatorFirstName}|"/>
 	<input type="hidden" id="communicator-last-name" th:value="|${session.communicator.communicatorLastName}|"/>
 	
+	<th:block th:with="room = ${session.communicator.room}">
+		<th:block th:each="ele : ${room}">
+			<input type="hidden" name="communicator-room" th:value="${ele.roomId}"/>
+		</th:block>
+	</th:block>
+	
 	<div class="header">
         <h1>Header</h1>
         <p>Resize the browser window to see the responsive effect.</p>

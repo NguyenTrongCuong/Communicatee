@@ -1,4 +1,4 @@
-package root.hibernate_2nd_level_of_cache_config;
+package root.config.hibernate_2nd_level_of_cache_config;
 
 import java.util.Map;
 
@@ -21,7 +21,7 @@ public class CustomRegionFactory extends RedissonRegionFactory {
         String password = passwordComponent2[0];
         Config config = new Config();
         config.useSingleServer()
-       		  .setConnectionMinimumIdleSize(5)
+       		  .setConnectionMinimumIdleSize(3)
        		  .setAddress(address)
        		  .setPassword(password);
         return Redisson.create(config);

@@ -1,5 +1,7 @@
 package root.entity_repository_services;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,9 +13,18 @@ public class NotificationService {
 	@Autowired
 	private NotificationRepository notificationRepository;
 	
-	public void saveNotification(Notification notification) {
+	public Notification saveNotification(Notification notification) {
+		return this.notificationRepository.save(notification);
+	}
+	
+	public Optional<Notification> findNotificationById(Long notificationId) {
+		return this.notificationRepository.findById(notificationId);
+	}
+	
+	public void updateNotification(Notification notification) {
 		this.notificationRepository.save(notification);
 	}
+	
 
 }
 

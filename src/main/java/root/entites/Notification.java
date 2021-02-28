@@ -9,6 +9,7 @@ import javax.persistence.CollectionTable;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -46,13 +47,13 @@ public class Notification implements Persistable<Long>, Serializable {
 	@Column(name="sender_ids")
 	private String from;
 	
-	@ElementCollection
+	@ElementCollection(fetch=FetchType.EAGER)
 	@CollectionTable(name="notifications_receivers",
 					 joinColumns=@JoinColumn(name="notification_ids"))
 	@Column(name="receiver_emails")
 	private Set<String> to = new HashSet<String>();
 	
-	@ManyToMany
+	@ManyToMany(fetch=FetchType.EAGER)
 	@JoinTable(name="notifications_communicators",
 			   joinColumns=@JoinColumn(name="notification_ids"),
 			   inverseJoinColumns=@JoinColumn(name="communicator_emails"))	

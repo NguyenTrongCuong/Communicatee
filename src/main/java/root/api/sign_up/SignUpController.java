@@ -7,6 +7,8 @@ import java.util.Set;
 
 import javax.validation.Valid;
 
+import org.springframework.amqp.core.AmqpAdmin;
+import org.springframework.amqp.core.Queue;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
@@ -23,7 +25,6 @@ import root.entites.Communicator;
 import root.entity_repository_services.AuthorityService;
 import root.entity_repository_services.CommunicatorService;
 import root.password_encoder.BCryptPasswordEncoder;
-import root.utils.queues.QueueDeclaration;
 
 @Controller
 public class SignUpController {
@@ -32,8 +33,8 @@ public class SignUpController {
 	@Autowired
 	private AuthorityService authorityService;
 	@Autowired
-	@Qualifier("directQueuesDeclaration")
-	private QueueDeclaration queueDeclaration;
+	@Qualifier("amqpAdmin")
+	private AmqpAdmin amqpAdmin;
 	
 	@GetMapping("/sign-up-page")
 	public String signUpPage(@ModelAttribute("model") Communicator model) {
@@ -78,12 +79,10 @@ public class SignUpController {
 	}
 	
 	private void declareNecessaryQueuesForANewAccount(String inputEmail) {
-		this.queueDeclaration.declareQueues(inputEmail + "-message");
-		this.queueDeclaration.declareQueues(inputEmail + "-message-count");
-		this.queueDeclaration.declareQueues(inputEmail + "-notification-count");
-		this.queueDeclaration.declareQueues(inputEmail + "-notification");
+		this.amqpAdmin.declareQueue(new Queue(inputEmail + "-message-notification"));
+		this.amqpAdmin.declareQueue(new Queue(inputEmail + "-notification-count"));
+		this.amqpAdmin.declareQueue(new Queue(inputEmail + "-notification"));
 	}
-	
 	
 	
 	
